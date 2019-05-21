@@ -18,16 +18,19 @@ export default class App extends Component{
     // setState diberikan function, property yg masuk adalah data state sebelumnya
     this.setState(prevState => {
       return {
-        places: prevState.places.concat(placeName)
+        places: prevState.places.concat({
+            key: Math.random().toString(),
+            value: placeName
+          })
       }
     })
   }
 
-  onDeletedHandler = (index) => {
+  onDeletedHandler = (key) => {
     this.setState(prevState => {
       return{
         places: prevState.places.filter((place, i) => {
-            return i !== index
+            return place.key !== key
         })
       }
     })
