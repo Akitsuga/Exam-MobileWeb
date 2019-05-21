@@ -17,12 +17,13 @@ const PlaceDetail = props => {
     }
     return(
         <Modal
+            onRequestClose={props.modalClosed}
             visible={props.selectedPlace !== null}
         >
             <View style={styles.modalContainer}>
                 {modalContent}
-                <Button title='Delete' color='red'/>
-                <Button title='Close'/>
+                <Button title='Delete' color='red' onPress={props.onDeletedItem}/>
+                <Button title='Close' onPress={props.modalClosed}/>
             </View>
         </Modal>
     )

@@ -40,20 +40,31 @@ export default class App extends Component{
     })
   }
 
-  placeDeletedHandler = (key) => {
+  placeDeletedHandler = () => {
     this.setState(prevState => {
       return{
         places: prevState.places.filter(place => {
-            return place.key !== key
-        })
+            return place.key !== prevState.selectedPlace.key
+        }),
+        selectedPlace: null
       }
+    })
+  }
+
+  modalCloseHandler = () => {
+    this.setState({
+      selectedPlace: null
     })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <PlaceDetail selectedPlace = {this.state.selectedPlace}/>
+        <PlaceDetail
+          modalClosed = {this.modalCloseHandler}
+          onDeletedItem = {this.placeDeletedHandler}
+          selectedPlace = {this.state.selectedPlace}
+        />
         <PlaceInput onSubmitHandler = {this.placeSubmitHandler}/>
         <PlaceList 
           places = {this.state.places}
