@@ -1,49 +1,48 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import PlaceInput from './src/components/PlaceInput/PlaceInput'
+import ListItem from './src/components/ListItem/ListItem'
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
+  state = {
+    places: []
+  }
+
+  placeSubmitHandler = placeName => {
+    if(placeName.trim() === ""){ // "   Alvin    " "Alvin" || "      " ""
+      return // berhenti
+    }
+
+    // setState diberikan function, property yg masuk adalah data state sebelumnya
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(placeName)
+      }
+    })
+  }
+
   render() {
+    const outputList = this.state.places.map((place, i) => {
+      return <ListItem key={i} placeName = {place}/>
+    })
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <PlaceInput onSubmitHandler = {this.placeSubmitHandler}/>
+        <View>
+          {outputList}
+        </View>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+    container: {
+      flex:1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      backgroundColor: '#eee',
+      padding: 26
+    }
+})
