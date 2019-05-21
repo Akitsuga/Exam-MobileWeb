@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 
 import PlaceInput from './src/components/PlaceInput/PlaceInput'
 import ListItem from './src/components/ListItem/ListItem'
+import PlaceList from './src/components/PlaceList/PlaceList';
 
 export default class App extends Component{
   state = {
@@ -22,16 +23,18 @@ export default class App extends Component{
     })
   }
 
+  onPressHandler = () => {
+    alert(`Something happen`)
+  }
+
   render() {
-    const outputList = this.state.places.map((place, i) => {
-      return <ListItem key={i} placeName = {place}/>
-    })
     return (
       <View style={styles.container}>
         <PlaceInput onSubmitHandler = {this.placeSubmitHandler}/>
-        <View>
-          {outputList}
-        </View>
+        <PlaceList 
+          places = {this.state.places}
+          onPressHandler ={this.onPressHandler}
+        />        
       </View>
     )
   }
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
       flex:1,
       justifyContent: 'flex-start',
       alignItems: 'center',
-      backgroundColor: '#eee',
+      backgroundColor: '#fff',
       padding: 26
     }
 })
