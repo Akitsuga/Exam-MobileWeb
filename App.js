@@ -23,9 +23,19 @@ export default class App extends Component{
     })
   }
 
-  onPressHandler = () => {
-    alert(`Something happen`)
+  onDeletedHandler = (index) => {
+    this.setState(prevState => {
+      return{
+        places: prevState.places.filter((place, i) => {
+            return i !== index
+        })
+      }
+    })
   }
+
+    // [1,2,3,4]
+  // 4
+  // [1,2,3]
 
   render() {
     return (
@@ -33,7 +43,7 @@ export default class App extends Component{
         <PlaceInput onSubmitHandler = {this.placeSubmitHandler}/>
         <PlaceList 
           places = {this.state.places}
-          onPressHandler ={this.onPressHandler}
+          onDeletedHandler ={this.onDeletedHandler}
         />        
       </View>
     )
