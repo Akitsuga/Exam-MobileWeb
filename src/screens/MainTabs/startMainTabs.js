@@ -5,7 +5,7 @@ const startTabs = () => {
     Promise.all([
         Icon.getImageSource('md-map', 30),
         Icon.getImageSource('ios-share-alt', 30),
-        Icon.getImageSource('menu', 30),
+        Icon.getImageSource('ios-menu', 30),
     ]).then(sources => {
         Navigation.startTabBasedApp({
             tabs: [
@@ -18,7 +18,8 @@ const startTabs = () => {
                         leftButtons: [
                             {
                                 icon: sources[2],
-                                title: 'Menu'
+                                title: 'Menu',
+                                id: 'sideDrawerToggle'
                             }
                         ]
                     }
@@ -27,7 +28,16 @@ const startTabs = () => {
                     screen: 'jc8reactnative.SharePlaceScreen',
                     label: 'Share Place',
                     title: 'Share Place',
-                    icon: sources[1]
+                    icon: sources[1],
+                    navigatorButtons: {
+                        leftButtons: [
+                            {
+                                icon: sources[2],
+                                title: 'Menu',
+                                id: 'sideDrawerToggle'
+                            }
+                        ]
+                    }
                 },
             ],
             drawer: {
