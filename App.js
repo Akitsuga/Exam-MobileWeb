@@ -1,10 +1,11 @@
-import  { Navigation } from 'react-native-navigation'
+import { Navigation } from 'react-native-navigation'
 import { Provider } from 'react-redux'
+import configureStore from './src/store/configureStore'
 
 import AuthScreen from './src/screens/Auth/Auth'
 import SharePlaceScreen from './src/screens/SharePlace/SharePlace'
 import FindPlaceScreen from './src/screens/FindPlace/FindPlace'
-import configureStore from './src/store/configureStore'
+import PlaceDetailScreen from './src/screens/PlaceDetail/PlaceDetail'
 
 const store = configureStore()
 
@@ -23,6 +24,11 @@ Navigation.registerComponent(
   () => FindPlaceScreen,
   store,
   Provider
+)
+
+Navigation.registerComponent(
+  'jc8reactnative.PlaceDetailScreen',
+  () => PlaceDetailScreen
 )
 
 // Start Screens

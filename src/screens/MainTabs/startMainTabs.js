@@ -23,9 +23,6 @@ const startTabs = () => {
             ]
         })
     })
-
-
-
 }
 
 export default startTabs 

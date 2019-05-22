@@ -7,7 +7,7 @@ const PlaceList = props => {
 
     return (
         <FlatList
-        style = {styles.listContainer}
+            style = {styles.listContainer}
             data = {props.places} //  [{key: 0, value: 'JKT'}]
             renderItem = {(info) => {
                 return (

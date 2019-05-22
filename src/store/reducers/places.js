@@ -1,8 +1,6 @@
 import { 
     ADD_PLACE,
-    DELETE_PLACE,
-    SELECT_PLACE,
-    DESELECT_PLACE
+    DELETE_PLACE
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -18,7 +16,7 @@ const reducer = (state = initialState, action) => {
                     key: Math.random().toString(),
                     value: action.placeName,
                     image: {
-                        uri: 'https://res.cloudinary.com/teepublic/image/private/s--ZuSXviSZ--/t_Preview/b_rgb:191919,c_limit,f_jpg,h_630,q_90,w_630/v1519368586/production/designs/2388108_0.jpg'
+                        uri: "https://freerangestock.com/sample/78746/halloween-cat-icon-means-trick-or-treat-and-autumn.jpg"
                     }
                 })
             }
