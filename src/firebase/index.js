@@ -1,13 +1,13 @@
 import firebase from 'firebase'
 
 var firebaseConfig = {
-    apiKey: "AIzaSyBGIDx6Y4MRrg-g_7_7VTEXJ-mVvM8rgro",
-    authDomain: "jc8ntapnative.firebaseapp.com",
-    databaseURL: "https://jc8ntapnative.firebaseio.com",
-    projectId: "jc8ntapnative",
-    storageBucket: "jc8ntapnative.appspot.com",
-    messagingSenderId: "397247298348",
-    appId: "1:397247298348:web:c18577bdf14a434e"
-  };
+  apiKey: "AIzaSyBe_Z4mcfOlZChCA0NEHpALXdwPdoOavSM",
+  authDomain: "aditjc8reactnative.firebaseapp.com",
+  databaseURL: "https://aditjc8reactnative.firebaseio.com",
+  projectId: "aditjc8reactnative",
+  storageBucket: "aditjc8reactnative.appspot.com",
+  messagingSenderId: "332699182497",
+  appId: "1:332699182497:web:966ffaafe868160a"
+};
   // Initialize Firebase
   export const Fire = firebase.initializeApp(firebaseConfig); 

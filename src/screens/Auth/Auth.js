@@ -38,18 +38,24 @@ class AuthScreen extends Component {
     }
     
     loginHandler= () => {
-        startTabs()
+        // Login ke firebase
+        Fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then(res => {
+            var {uid, email} = res.user
+            // Login ke aplikasi
+            this.props.onLoginUser(uid,email)
+        })
     }
 
     signupHandler = () => {
         if(this.state.email && this.state.password && this.state.confirm){
             if(this.state.password === this.state.confirm){
                 if(this.state.password.trim().length > 6){
-                    //signup
+                    //signup dan auto login ke firebase
                     Fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
                     .then(res => {
                         var {uid, email} = res.user
-                        // temba ke redux
+                        // login ke aplikasi
                         this.props.onLoginUser(uid,email)
                     }).catch(err => {
                         this.setState({error: err.message})
