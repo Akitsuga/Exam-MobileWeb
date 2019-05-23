@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TextInput, Text, Button, StyleSheet, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux'
 
-import PlaceInput from '../../components/PlaceInput/PlaceInput'
 import { addPlace } from '../../store/actions/index'
+
+import imageBackground from '../../assets/react-native-wide.png'
+import imageBackgroundWorld from '../../assets/world-map.jpg'
+import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
+import HeadingText from '../../components/UI/HeadingText/HeadingText'
+import MainText from '../../components/UI/MainText/MainText'
 
 class SharePlaceScreen extends Component {
     constructor(props) {
@@ -28,12 +33,50 @@ class SharePlaceScreen extends Component {
 
     render () {
         return (
-            <View>
-                <PlaceInput onPlaceAdded = {this.placeAddedHandler}/>
-            </View>
+            <ScrollView>
+                <View style={styles.container}>
+                    <MainText>
+                        <HeadingText>Share Place with Us !</HeadingText>
+                    </MainText>
+                    <View style={styles.placeholder}>
+                        <Image source={imageBackground} style={styles.previewImage}/>
+                    </View>
+                    <View style={styles.button}>
+                        <Button title='Locate Me'/>
+                    </View>
+                    <View style={styles.placeholder}>
+                        <Image source={imageBackgroundWorld} style={styles.previewImage}/></View>
+
+                    <View style={styles.button}>
+                    <DefaultInput placeholder='Place Name'/>
+                        <Button title='Share Place'/>
+                    </View>
+                </View>
+            </ScrollView>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    placeholder: {
+        borderWidth: 1,
+        borderColor: 'black',
+        backgroundColor: '#eee',
+        width: '80%',
+        height: 150
+    },
+    button: {
+        margin: 8
+    },
+    previewImage: {
+        width: '100%',
+        height: '100%'
+    }
+})
 
 const mapDispatchToProps = dispatch => {
     return {
