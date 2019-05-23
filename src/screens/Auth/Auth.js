@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Button, StyleSheet, ImageBackground } from 'react-native'
+import { View, Button, StyleSheet, ImageBackground, KeyboardAvoidingView } from 'react-native'
 
 import startMainTabs from '../MainTabs/startMainTabs'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
@@ -10,7 +10,10 @@ import ButtonWithBackground from '../../components/UI/ButtonWithBackground/Butto
 
 class AuthScreen extends Component {
     state = {
-        authMode : 'login'
+        authMode : 'login',
+        email: '',
+        password: '',
+        confirm: ''
     }
     
     loginHandler= () => {
@@ -31,8 +34,12 @@ class AuthScreen extends Component {
 
         if(this.state.authMode === 'signup'){
             confirmPasswordControl = (
-                <DefaultInput placeholder='Confirm Password'/>
+                <DefaultInput
+                placeholder='Confirm Password'
+                onChangeText={val => {this.setState({confirm: val})}}
+                secureTextEntry/>
             )
+
             submitButtonControl = (
                 <ButtonWithBackground color='#a5b4ef' onTekan={this.loginHandler}>
                     Signup
@@ -60,18 +67,23 @@ class AuthScreen extends Component {
 
         return (
             <ImageBackground source={imageBackground} style={styles.backgroundImage}>
-            <View style={styles.container}>
-            {headingTextControl}
-                <ButtonWithBackground color='#a5b4ef' onTekan={this.switchAuthModeHandler}>
-                    Switch to {this.state.authMode === 'login' ? 'Signup' : 'Login'}
-                </ButtonWithBackground>
-                <View style={styles.inputContainer}>
-                    <DefaultInput placeholder='Your E-Mail Address' style/>
-                    <DefaultInput placeholder='Password'/>
-                    {confirmPasswordControl}
-                </View>
-                {submitButtonControl}
-            </View>
+                <KeyboardAvoidingView behavior='padding' style={styles.container}>
+                {headingTextControl}
+                    <ButtonWithBackground color='#a5b4ef' onTekan={this.switchAuthModeHandler}>
+                        Switch to {this.state.authMode === 'login' ? 'Signup' : 'Login'}
+                    </ButtonWithBackground>
+                    <View style={styles.inputContainer}>
+                    <DefaultInput 
+                        placeholder='Your E-Mail Address'
+                        onChangeText={val => {this.setState({email: val})}}/>
+                    <DefaultInput
+                        placeholder='Password'
+                        onChangeText={val => {this.setState({password: val})}}
+                        secureTextEntry/>
+                        {confirmPasswordControl}
+                    </View>
+                    {submitButtonControl}
+                </KeyboardAvoidingView>
             </ImageBackground>
         )
     }
