@@ -4,10 +4,6 @@ import {View, TextInput, Button, StyleSheet} from 'react-native'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 
 class PlaceInput extends Component{
-    state = {
-        placeName: ''
-    }
-
     placeNameChangedHandler = (val) => {
         this.setState({placeName: val})
     }
@@ -16,8 +12,8 @@ class PlaceInput extends Component{
         return(
             <DefaultInput
                 placeholder='Place Name'
-                value = {this.state.placeName}
-                onChangeText = {this.placeNameChangedHandler}
+                value = {this.props.placeName}
+                onChangeText = {this.props.onChangeText}
             />
         )
     }
