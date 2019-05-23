@@ -41,7 +41,9 @@ Navigation.registerComponent(
 
 Navigation.registerComponent(
   'jc8reactnative.SideDrawerScreen',
-  () => SideDrawerScreen
+  () => SideDrawerScreen,
+  store,
+  Provider
 )
 
 // Start Screens

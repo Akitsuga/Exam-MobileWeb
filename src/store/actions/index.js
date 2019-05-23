@@ -1,2 +1,2 @@
 export { addPlace, deletePlace } from './places'
-export { loginUser } from './auth' 
+export { loginUser, logoutUser } from './auth' 
