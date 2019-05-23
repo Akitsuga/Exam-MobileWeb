@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { View, Button, StyleSheet, ImageBackground, KeyboardAvoidingView } from 'react-native'
+import { View, Button, Text, StyleSheet,ImageBackground, KeyboardAvoidingView} from 'react-native'
+import { connect } from 'react-redux'
+
+import { Fire } from '../../firebase/index'
+import { loginUser } from '../../store/actions/index'
 
 import startMainTabs from '../MainTabs/startMainTabs'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
@@ -13,11 +17,52 @@ class AuthScreen extends Component {
         authMode : 'login',
         email: '',
         password: '',
-        confirm: ''
+        confirm: '',
+        error: ''
+    }
+
+    componentDidUpdate(){
+        if(this.props.user){
+            startMainTabs()
+        }
+    }
+
+    componentDidMount() {
+        Fire.auth().onAuthStateChanged((user)=>{
+            if(user){
+                var {uid, email} = user
+                // tembak ke redux
+                this.props.onLoginUser(uid,email)
+            }
+        })
     }
     
     loginHandler= () => {
         startMainTabs()
+    }
+
+    signupHandler = () => {
+        if(this.state.email && this.state.password && this.state.confirm){
+            if(this.state.password === this.state.confirm){
+                if(this.state.password.trim().length > 6){
+                    //signup
+                    Fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+                    .then(res => {
+                        var {uid, email} = res.user
+                        // temba ke redux
+                        this.props.onLoginUser(uid,email)
+                    }).catch(err => {
+                        this.setState({error: err.message})
+                    })
+                } else {
+                    this.setState({error: 'Password harus lebih dari 6 karakter'})
+                }
+            } else {
+                this.setState({error: 'Password dan Confirm tidak sama'})
+            }
+        } else {
+            this.setState({error: 'Harap isi semua kolom'})
+        }
     }
 
     switchAuthModeHandler = () => {
@@ -31,6 +76,13 @@ class AuthScreen extends Component {
     render () {
         let submitButtonControl, headingTextControl
         let confirmPasswordControl = null
+        let errMessage = null
+
+        if(this.state.error){
+            errMessage = (
+                <Text>{this.state.error}</Text>
+            )
+        }
 
         if(this.state.authMode === 'signup'){
             confirmPasswordControl = (
@@ -41,7 +93,7 @@ class AuthScreen extends Component {
             )
 
             submitButtonControl = (
-                <ButtonWithBackground color='#a5b4ef' onTekan={this.loginHandler}>
+                <ButtonWithBackground color='#a5b4ef' onTekan={this.signupHandler}>
                     Signup
                 </ButtonWithBackground>
             )
@@ -83,6 +135,7 @@ class AuthScreen extends Component {
                         {confirmPasswordControl}
                     </View>
                     {submitButtonControl}
+                    {errMessage}
                 </KeyboardAvoidingView>
             </ImageBackground>
         )
@@ -104,4 +157,16 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AuthScreen 
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user.email
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLoginUser: (uid, email) => dispatch(loginUser(uid, email))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen) 
