@@ -106,7 +106,8 @@ class AuthScreen extends Component {
 
             headingTextControl = (
                 <MainText>
-                    <HeadingText>Please Sign Up</HeadingText>
+                    <HeadingText>Aditya Agustika Mot       
+                        Please Sign Up</HeadingText>
                 </MainText>
             )
         } else {
@@ -118,7 +119,7 @@ class AuthScreen extends Component {
 
             headingTextControl = (
                 <MainText>
-                    <HeadingText>Please Log In</HeadingText>
+                    <HeadingText>Aditya Agustika Mot            Please Log In</HeadingText>
                 </MainText>
             )
         }

@@ -11,10 +11,14 @@ import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
 import MainText from '../../components/UI/MainText/MainText'
 import PlaceInput from '../../components/PlaceInput/PlaceInput'
+import AgeInput from '../../components/AgeInput/AgeInput'
+import PositionInput from '../../components/PositionInput/PositionInput'
 
 class SharePlaceScreen extends Component {
     state = {
-        placeName : ''
+        placeName : '',
+        age: '',
+        position: ''
     }
 
     constructor(props) {
@@ -38,28 +42,27 @@ class SharePlaceScreen extends Component {
         })
     }
 
-    // showData = items => {
-    //     var arrData = []
-    //     var rawData = items.val()
+    AgeChangedHandler = (val) => {
+        this.setState({
+            age: val
+        })
+    }
 
-    //     Object.keys(rawData).forEach(id => {
-    //         arrData.push({
-    //             key: id,
-    //             value: rawData[id].name,
-    //             image: {
-    //                 uri: "https://freerangestock.com/sample/78746/halloween-cat-icon-means-trick-or-treat-and-autumn.jpg"
-    //             }
-    //         })
-    //     })
-
-    // }
+    PositionChangedHandler = (val) => {
+        this.setState({
+            position: val
+        })
+    }
 
     placeAddedHandler = () => {
         var places = Fire.database().ref('places')
         if(this.state.placeName.trim() !== ''){
             // input data ke firebase
             places.push({
-                name: this.state.placeName
+                name: this.state.placeName,
+                uid: this.props.user,
+                age: this.state.age,
+                position: this.state.position
             }).then(res => {
                 // ambil semua data di firebase, lempar ke redux
                 places.once('value', this.props.onCreateData, (err)=>{console.log(err)})
@@ -72,11 +75,19 @@ class SharePlaceScreen extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <MainText>
-                        <HeadingText>Share Place with Us !</HeadingText>
+                        <HeadingText>Input Data Karyawan</HeadingText>
                     </MainText>
                     <PlaceInput
                         placeName = {this.state.placeName}
                         onChangeText = {this.placeNameChangedHandler}
+                    />
+                    <AgeInput
+                        placeName = {this.state.age}
+                        onChangeText = {this.AgeChangedHandler}
+                    />
+                    <PositionInput
+                        placeName = {this.state.position}
+                        onChangeText = {this.PositionChangedHandler}
                     />
                     <Button title='Share Place' onPress={this.placeAddedHandler}/>
                 </View>
@@ -113,4 +124,10 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(SharePlaceScreen) 
+const mstp = state => {
+    return {
+        user: state.auth.user.uid
+    }
+}
+
+export default connect(mstp, mapDispatchToProps)(SharePlaceScreen) 

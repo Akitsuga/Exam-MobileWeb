@@ -11,7 +11,7 @@ class PlaceInput extends Component{
     render(){
         return(
             <DefaultInput
-                placeholder='Place Name'
+                placeholder='Name'
                 value = {this.props.placeName}
                 onChangeText = {this.props.onChangeText}
             />
